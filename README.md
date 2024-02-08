@@ -1,5 +1,6 @@
+## Pingularity: Real-time Ping Monitoring
+Pingularity is a React application that provides real-time monitoring of your network and system performance. It pings your network every 2.5 seconds and displays the results in a clear and concise dashboard.
 
-This program shows your network ping instantly and automatically logs your ping every 2 seconds.
 ## Getting Started and demo
 
 
