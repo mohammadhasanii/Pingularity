@@ -1,29 +1,32 @@
-import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [ping, setPing] = useState(0);
+  const [pingValue, setPingValue] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const startTime = performance.now();
-
-      fetch(
-        "https://c.amazon-adsystem.com/cdn/prod/config?src=3336&u=https%3A%2F%2Fwww.speedtest.net      "
-      )
-        .then((response) => response.json())
-        .then((data) => setPing(data))
-        .then((data) => {
-          const endTime = performance.now();
-          const ping = endTime - startTime;
-
-          setPing(ping);
-        })
-        .catch((error) => console.error("خطا در دریافت پینگ:", error));
-    }, 2500);
+    const interval = setInterval(fetchPing, 2500);
 
     return () => clearInterval(interval);
   }, []);
+
+  const fetchPing = async () => {
+    try {
+      const startTime = performance.now();
+      const response = await fetch("https://c.amazon-adsystem.com/cdn/prod/config?src=3336&u=https%3A%2F%2Fwww.speedtest.net");
+
+      if (!response.ok) {
+        throw new Error("Erro ao obter ping.");
+      }
+
+      const data = await response.json();
+      const endTime = performance.now();
+      const ping = endTime - startTime;
+
+      setPingValue(ping);
+    } catch (error) {
+      console.error("Erro ao obter ping:", error);
+    }
+  };
 
   return (
     <>
